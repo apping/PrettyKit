@@ -481,7 +481,12 @@ typedef enum {
 - (void) prepareForTableView:(UITableView *)tableView indexPath:(NSIndexPath *)indexPath 
 {
     _tableViewStyle = tableView.style;
-    self.position = [PrettyTableViewCell positionForTableView:tableView indexPath:indexPath];
+    
+    if (self.position != [PrettyTableViewCell positionForTableView:tableView indexPath:indexPath]) {
+        self.position = [PrettyTableViewCell positionForTableView:tableView indexPath:indexPath];
+        
+        [[self backgroundView] setNeedsDisplay];
+    }
 }
 
 // Avoids contentView's frame auto-updating. It calculates the best size, taking
