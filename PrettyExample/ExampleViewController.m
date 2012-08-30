@@ -87,14 +87,14 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 5;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     if (section == 0) {
-        return 3;
+        return 1;
     }
     if (section == 1) {
         return 1;
@@ -124,7 +124,8 @@
     PrettyTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[PrettyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-        cell.tableViewBackgroundColor = tableView.backgroundColor;        
+        cell.tableViewBackgroundColor = tableView.backgroundColor;
+        [[cell textLabel] setBackgroundColor:[UIColor clearColor]];
     }
     
     switch (indexPath.section) {
@@ -236,7 +237,7 @@
 #pragma mark - Table view delegate
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return tableView.rowHeight + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath];
+    return tableView.rowHeight + [PrettyTableViewCell tableView:tableView neededHeightForIndexPath:indexPath] + arc4random()%150;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -249,6 +250,9 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      [detailViewController release];
      */
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

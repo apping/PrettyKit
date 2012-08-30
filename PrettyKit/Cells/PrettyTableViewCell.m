@@ -44,6 +44,8 @@
 #define default_selection_gradient_start_color  [UIColor colorWithHex:0x0089F9]
 #define default_selection_gradient_end_color    [UIColor colorWithHex:0x0054EA]
 
+#define RADIANS(degrees) ((degrees) / (180.0 / M_PI))
+
 
 typedef enum {
     CellBackgroundBehaviorNormal = 0,
@@ -94,7 +96,7 @@ typedef enum {
 @synthesize behavior;
 
 
-- (CGPathRef) createRoundedPath:(CGRect)rect 
+- (CGPathRef) createRoundedPath:(CGRect)rect
 {
 	if (!self.cell.cornerRadius) {
 		return [UIBezierPath bezierPathWithRect:rect].CGPath;
@@ -117,10 +119,32 @@ typedef enum {
             break;
     }
 
-    UIBezierPath *thePath = [UIBezierPath bezierPathWithRoundedRect:rect
-                                                  byRoundingCorners:corners
-                                                        cornerRadii:CGSizeMake(self.cell.cornerRadius, self.cell.cornerRadius)];    
-    return thePath.CGPath;
+//    UIBezierPath *thePath = [UIBezierPath bezierPathWithRoundedRect:rect
+//                                                  byRoundingCorners:corners
+//                                                        cornerRadii:CGSizeMake(self.cell.cornerRadius, self.cell.cornerRadius)];
+    
+    CGFloat radius = self.cell.cornerRadius;
+    CGFloat arrowHeight = 5;
+    CGFloat arrowWidth = 10;
+    CGFloat arrowPosition = 20;
+    
+    UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
+    [bezier2Path moveToPoint:CGPointMake(radius/2, arrowHeight)];
+    [bezier2Path addLineToPoint:CGPointMake(radius/2 + arrowPosition, arrowHeight)]; // Left beginning of the arrow
+    [bezier2Path addLineToPoint:CGPointMake(radius/2 + arrowPosition + arrowWidth/2, 0)]; // Top of the arrow
+    [bezier2Path addLineToPoint:CGPointMake(radius/2 + arrowPosition + arrowWidth, arrowHeight)]; // Right end of the arrow
+    [bezier2Path addLineToPoint:CGPointMake(CGRectGetWidth(rect)-radius/2, arrowHeight)]; // Line after arrow
+    [bezier2Path addArcWithCenter:CGPointMake(CGRectGetWidth(rect)-radius/2, arrowHeight + radius/2) radius:radius/2 startAngle:RADIANS(-90) endAngle:RADIANS(0) clockwise:YES]; // Topright corner
+    [bezier2Path addLineToPoint:CGPointMake(CGRectGetWidth(rect), CGRectGetHeight(rect)-radius/2)];
+    [bezier2Path addArcWithCenter:CGPointMake(CGRectGetWidth(rect)-radius/2, CGRectGetHeight(rect)-radius/2) radius:radius/2 startAngle:RADIANS(0) endAngle:RADIANS(90) clockwise:YES]; // Bottomright corner
+    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(rect)+radius/2, CGRectGetHeight(rect))];
+    [bezier2Path addArcWithCenter:CGPointMake(CGRectGetMinX(rect)+radius/2, CGRectGetHeight(rect)-radius/2) radius:radius/2 startAngle:RADIANS(90) endAngle:RADIANS(180) clockwise:YES]; // Bottomleft corner
+    [bezier2Path addLineToPoint:CGPointMake(CGRectGetMinX(rect), arrowHeight+radius/2)];
+    [bezier2Path addArcWithCenter:CGPointMake(CGRectGetMinX(rect)+radius/2, arrowHeight+radius/2) radius:radius/2 startAngle:RADIANS(180) endAngle:RADIANS(270) clockwise:YES]; // Bottomleft corner
+    
+    [bezier2Path closePath];
+
+    return bezier2Path.CGPath;
 }
 
 
@@ -340,13 +364,14 @@ typedef enum {
     [super dealloc];
 }
 
-- (id) initWithFrame:(CGRect)frame behavior:(CellBackgroundBehavior)bbehavior 
+- (id) initWithFrame:(CGRect)frame behavior:(CellBackgroundBehavior)bbehavior
 {
     if (self = [super initWithFrame:frame]) 
     {
         self.contentMode = UIViewContentModeRedraw;
         self.behavior = bbehavior;
         self.backgroundColor = [UIColor clearColor];
+        self.layer.needsDisplayOnBoundsChange = YES;
     }
     
     return self;
@@ -398,21 +423,41 @@ typedef enum {
     self.customSeparatorStyle = UITableViewCellSeparatorStyleSingleLine;
 }
 
+- (void)layoutSubviews
+{
+    [self setContentMode:UIViewContentModeRedraw];
+    [self.backgroundView setContentMode:UIViewContentModeRedraw];
+    [self.selectedBackgroundView setContentMode:UIViewContentModeRedraw];
+    
+
+}
+
 - (void)commonInit {
     [self.contentView addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionOld context:nil];
     
     
     PrettyTableViewCellBackground *bg = [[PrettyTableViewCellBackground alloc] initWithFrame:self.frame
                                                                                     behavior:CellBackgroundBehaviorNormal];
+    
     bg.cell = self;
     self.backgroundView = bg;
     [bg release];
     
     bg = [[PrettyTableViewCellBackground alloc] initWithFrame:self.frame
                                                      behavior:CellBackgroundBehaviorSelected];
+    
     bg.cell = self;
     self.selectedBackgroundView = bg;
     [bg release];
+    
+    self.layer.needsDisplayOnBoundsChange = YES;
+    self.backgroundView.layer.needsDisplayOnBoundsChange = YES;
+    self.selectedBackgroundView.layer.needsDisplayOnBoundsChange = YES;
+    
+
+    [self setContentMode:UIViewContentModeRedraw];
+    [self.backgroundView setContentMode:UIViewContentModeRedraw];
+    [self.selectedBackgroundView setContentMode:UIViewContentModeRedraw];
     
     [self initializeVars];
 }
