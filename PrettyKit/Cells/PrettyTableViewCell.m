@@ -425,11 +425,11 @@ typedef enum {
 
 - (void)layoutSubviews
 {
+    [super layoutSubviews];
+    
     [self setContentMode:UIViewContentModeRedraw];
     [self.backgroundView setContentMode:UIViewContentModeRedraw];
     [self.selectedBackgroundView setContentMode:UIViewContentModeRedraw];
-    
-
 }
 
 - (void)commonInit {
