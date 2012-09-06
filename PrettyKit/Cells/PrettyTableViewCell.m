@@ -482,8 +482,9 @@ typedef enum {
 {
     _tableViewStyle = tableView.style;
     
-    if (self.position != [PrettyTableViewCell positionForTableView:tableView indexPath:indexPath]) {
-        self.position = [PrettyTableViewCell positionForTableView:tableView indexPath:indexPath];
+    PrettyTableViewCellPosition newPosition = [PrettyTableViewCell positionForTableView:tableView indexPath:indexPath];
+    if (self.position != newPosition) {
+        self.position = newPosition;
         
         [[self backgroundView] setNeedsDisplay];
     }
