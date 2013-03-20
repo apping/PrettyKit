@@ -5,3 +5,5 @@ build/
 PrettyExample.xcodeproj/*.mode1v3
 PrettyExample.xcodeproj/*.pbxuser
 
+PrettyStoryboardExample.xcodeproj/project.xcworkspace
+PrettyStoryboardExample.xcodeproj/xcuserdata

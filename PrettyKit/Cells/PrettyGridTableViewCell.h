@@ -119,10 +119,10 @@
 @property (nonatomic, assign) UITextAlignment textAlignment;
 
 /** Returns an array with all the texts in the grid. */
-@property (nonatomic, readonly) NSArray *texts;
+@property (weak, nonatomic, readonly) NSArray *texts;
 
 /** Returns an array with all the detail texts in the grid. */
-@property (nonatomic, readonly) NSArray *detailTexts;
+@property (weak, nonatomic, readonly) NSArray *detailTexts;
 
 /** Specifies if the shadow should be shown only on the selected element.
  

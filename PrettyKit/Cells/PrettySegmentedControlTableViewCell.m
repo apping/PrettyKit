@@ -51,10 +51,9 @@
         // Initialization code
         selectedIndex = -1;
         
-        UIColor *tmp = [self.selectionGradientStartColor retain];
+        UIColor *tmp = self.selectionGradientStartColor;
         self.selectionGradientStartColor = self.selectionGradientEndColor;
         self.selectionGradientEndColor = tmp;
-        [tmp release];
         
         self.textLabel.shadowColor = [UIColor blackColor];
         self.textLabel.shadowOffset = CGSizeMake(0, 1);
@@ -101,8 +100,9 @@
 
 
 - (void) setActionBlock:(void (^)(NSIndexPath *indexPath, int sselectedIndex))actionBlock {
+    id bself = self; 
     [super setActionBlock:^(NSIndexPath *indexPath, int sselectedIndex) {
-        [self _setSelectedIndex:sselectedIndex notifySuper:NO];
+        [bself _setSelectedIndex:sselectedIndex notifySuper:NO];
         
         if (actionBlock)
         {

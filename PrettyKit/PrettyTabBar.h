@@ -46,16 +46,16 @@
 /** Specifies the gradient's start color.
  
  By default is a black tone. */
-@property (nonatomic, retain) UIColor *gradientStartColor;
+@property (nonatomic, strong) UIColor *gradientStartColor;
 
 /** Specifies the gradient's end color.
  
  By default is a black tone. */
-@property (nonatomic, retain) UIColor *gradientEndColor;
+@property (nonatomic, strong) UIColor *gradientEndColor;
 
 /** Specifies the top separator's color.
  
  By default is a black tone. */
-@property (nonatomic, retain) UIColor *separatorLineColor;
+@property (nonatomic, strong) UIColor *separatorLineColor;
 
 @end

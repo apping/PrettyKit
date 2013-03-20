@@ -57,7 +57,7 @@
 @interface PrettySegmentedControlTableViewCell : PrettyGridTableViewCell
 
 
-@property (nonatomic, retain) NSArray *titles;
+@property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, assign) NSInteger selectedIndex;
 
 @end

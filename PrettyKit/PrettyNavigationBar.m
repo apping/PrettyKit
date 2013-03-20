@@ -44,15 +44,6 @@
 #define default_tint_color              [UIColor colorWithHex:0x3D89BF]
 #define default_roundedcorner_color     [UIColor blackColor]
 
-- (void)dealloc {
-    self.gradientStartColor = nil;
-    self.gradientEndColor = nil;
-    self.topLineColor = nil;
-    self.bottomLineColor = nil;
-    self.roundedCornerColor = nil;    
-    
-    [super dealloc];
-}
 
 - (void) initializeVars 
 {

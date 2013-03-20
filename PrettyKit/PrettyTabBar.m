@@ -37,13 +37,6 @@
 @implementation PrettyTabBar
 @synthesize gradientStartColor, gradientEndColor, separatorLineColor;
 
-- (void) dealloc {
-    self.gradientStartColor = nil;
-    self.gradientEndColor = nil;
-    self.separatorLineColor = nil;
-    
-    [super dealloc];
-}
 
 - (void) initializeVars 
 {

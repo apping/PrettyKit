@@ -30,6 +30,7 @@
 		57A6337614FE7672004D2647 /* ExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 57A6337514FE7672004D2647 /* ExampleViewController.m */; };
 		57CF9FB1151BA08600BC035B /* PlainExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 57CF9FAF151BA08600BC035B /* PlainExample.m */; };
 		57CF9FB2151BA08600BC035B /* PlainExample.xib in Resources */ = {isa = PBXBuildFile; fileRef = 57CF9FB0151BA08600BC035B /* PlainExample.xib */; };
+		DB6D861416176E2C004A5CA8 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DB6D861316176E2C004A5CA8 /* Default-568h@2x.png */; };
 		EDA7DCB11548EBD1002219BA /* PrettyToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA7DCB01548EBD1002219BA /* PrettyToolbar.m */; };
 		EDA7DCB61548ED3F002219BA /* ModalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EDA7DCB41548ED3E002219BA /* ModalViewController.m */; };
 		EDA7DCB71548ED3F002219BA /* ModalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDA7DCB51548ED3E002219BA /* ModalViewController.xib */; };
@@ -75,6 +76,7 @@
 		57CF9FAE151BA08600BC035B /* PlainExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlainExample.h; sourceTree = "<group>"; };
 		57CF9FAF151BA08600BC035B /* PlainExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlainExample.m; sourceTree = "<group>"; };
 		57CF9FB0151BA08600BC035B /* PlainExample.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlainExample.xib; sourceTree = "<group>"; };
+		DB6D861316176E2C004A5CA8 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../Default-568h@2x.png"; sourceTree = "<group>"; };
 		EDA7DCAF1548EBD1002219BA /* PrettyToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrettyToolbar.h; sourceTree = "<group>"; };
 		EDA7DCB01548EBD1002219BA /* PrettyToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrettyToolbar.m; sourceTree = "<group>"; };
 		EDA7DCB31548ED3E002219BA /* ModalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModalViewController.h; sourceTree = "<group>"; };
@@ -101,6 +103,8 @@
 			isa = PBXGroup;
 			children = (
 				5735F8C114FD2FFC00DD7370 /* PrettyExample */,
+				578998AF1535E02000E06FCA /* PrettyKit */,
+				5735F8C214FD2FFC00DD7370 /* Supporting Files */,
 				5735F8BA14FD2FFC00DD7370 /* Frameworks */,
 				5735F8B814FD2FFC00DD7370 /* Products */,
 			);
@@ -128,14 +132,12 @@
 		5735F8C114FD2FFC00DD7370 /* PrettyExample */ = {
 			isa = PBXGroup;
 			children = (
-				578998AF1535E02000E06FCA /* PrettyKit */,
 				5735F8CA14FD2FFC00DD7370 /* AppDelegate.h */,
 				5735F8CB14FD2FFC00DD7370 /* AppDelegate.m */,
-				5735F8C214FD2FFC00DD7370 /* Supporting Files */,
+				57360BDC14FF84F600343B7B /* MainWindow.xib */,
 				57A6337414FE7672004D2647 /* ExampleViewController.h */,
 				57A6337514FE7672004D2647 /* ExampleViewController.m */,
 				57360BDE14FF889B00343B7B /* ExampleViewController.xib */,
-				57360BDC14FF84F600343B7B /* MainWindow.xib */,
 				EDA7DCB31548ED3E002219BA /* ModalViewController.h */,
 				EDA7DCB41548ED3E002219BA /* ModalViewController.m */,
 				EDA7DCB51548ED3E002219BA /* ModalViewController.xib */,
@@ -157,8 +159,10 @@
 				5735F8C414FD2FFC00DD7370 /* InfoPlist.strings */,
 				5735F8C714FD2FFC00DD7370 /* main.m */,
 				5735F8C914FD2FFC00DD7370 /* PrettyExample-Prefix.pch */,
+				DB6D861316176E2C004A5CA8 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			path = PrettyExample;
 			sourceTree = "<group>";
 		};
 		578998AF1535E02000E06FCA /* PrettyKit */ = {
@@ -252,6 +256,7 @@
 				572B2E6A153496880002228B /* background.png in Resources */,
 				572B2E6B153496880002228B /* background@2x.png in Resources */,
 				EDA7DCB71548ED3F002219BA /* ModalViewController.xib in Resources */,
+				DB6D861416176E2C004A5CA8 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,10 +345,11 @@
 		5735F8D014FD2FFC00DD7370 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PrettyExample/PrettyExample-Prefix.pch";
 				INFOPLIST_FILE = "PrettyExample/PrettyExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = PrettyExample;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -353,10 +359,11 @@
 		5735F8D114FD2FFC00DD7370 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PrettyExample/PrettyExample-Prefix.pch";
 				INFOPLIST_FILE = "PrettyExample/PrettyExample-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = PrettyExample;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

@@ -41,6 +41,6 @@
 @interface PrettyCustomViewTableViewCell : PrettyTableViewCell
 
 /** Holds a reference to the custom view. */
-@property (nonatomic, retain) UIView *customView;
+@property (nonatomic, strong) UIView *customView;
 
 @end

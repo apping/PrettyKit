@@ -49,7 +49,7 @@
     PrettyShadowPlainTableview *view = [[PrettyShadowPlainTableview alloc] initWithFrame:CGRectMake(0, 0, 0, view_height)];
     view->_position = position;
     
-    return [view autorelease];
+    return view;
 }
 
 
