@@ -51,36 +51,36 @@
 /** Specifies the navigation bar shadow's opacity.
  
  By default is `0.5`. */
-@property (nonatomic, assign) float shadowOpacity;
+@property (nonatomic, assign) float shadowOpacity UI_APPEARANCE_SELECTOR;
 
 /** Specifies the gradient's start color.
  
  By default is a blue tone. */
-@property (nonatomic, strong) UIColor *gradientStartColor;
+@property (nonatomic, strong) UIColor *gradientStartColor UI_APPEARANCE_SELECTOR;
 
 /** Specifies the gradient's end color.
  
  By default is a blue tone. */
-@property (nonatomic, strong) UIColor *gradientEndColor;
+@property (nonatomic, strong) UIColor *gradientEndColor UI_APPEARANCE_SELECTOR;
 
 /** Specifies the gradient's top line color.
  
  By default is a blue tone. */
-@property (nonatomic, strong) UIColor *topLineColor;
+@property (nonatomic, strong) UIColor *topLineColor UI_APPEARANCE_SELECTOR;
 
 /** Specifies the gradient's bottom line color.
  
  By default is a blue tone. */
-@property (nonatomic, strong) UIColor *bottomLineColor;
+@property (nonatomic, strong) UIColor *bottomLineColor UI_APPEARANCE_SELECTOR;
 
 /** Specifies the background color for the rounded corners.
  
  By default is a black tone. */
-@property (nonatomic, strong) UIColor *roundedCornerColor;
+@property (nonatomic, strong) UIColor *roundedCornerColor UI_APPEARANCE_SELECTOR;
 
 /** Specifies the radius for the rounded corners.
  
  By default it is 0.0 which means there is no rounded corners. */
-@property (readwrite) CGFloat roundedCornerRadius;
+@property (nonatomic, readwrite) CGFloat roundedCornerRadius UI_APPEARANCE_SELECTOR;
 
 @end

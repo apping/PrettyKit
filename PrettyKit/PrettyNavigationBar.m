@@ -33,7 +33,6 @@
 #import <math.h>
 
 @implementation PrettyNavigationBar
-@synthesize shadowOpacity, gradientEndColor, gradientStartColor, topLineColor, bottomLineColor, roundedCornerRadius, roundedCornerColor;
 
 
 #define default_shadow_opacity 0.5
@@ -47,15 +46,18 @@
 
 - (void) initializeVars 
 {
+    // Default navBar properties
     self.contentMode = UIViewContentModeRedraw;
-    self.shadowOpacity = default_shadow_opacity;
-    self.gradientStartColor = default_gradient_start_color;
-    self.gradientEndColor = default_gradient_end_color;
-    self.topLineColor = default_top_line_color;
-    self.bottomLineColor = default_bottom_line_color;
     self.tintColor = default_tint_color;
-    self.roundedCornerColor = default_roundedcorner_color;
-    self.roundedCornerRadius = 0.0;
+    
+    // Custom properties
+    _shadowOpacity = default_shadow_opacity;
+    _gradientStartColor = default_gradient_start_color;
+    _gradientEndColor = default_gradient_end_color;
+    _topLineColor = default_top_line_color;
+    _bottomLineColor = default_bottom_line_color;
+    _roundedCornerColor = default_roundedcorner_color;
+    _roundedCornerRadius = 0.0;
 }
 
 - (id)initWithCoder:(NSCoder *)coder {
@@ -127,6 +129,23 @@
         // draw the right rounded corner with a 90degree transform. this means the x and y coords are flipped which means the point must also flip
         [self drawLeftRoundedCornerAtPoint:CGPointMake(0, -self.frame.size.width) withRadius:self.roundedCornerRadius withTransformation:CGAffineTransformMakeRotation((90) * M_PI/180)];
     }
+}
+
+- (void)setRoundedCornerRadius:(CGFloat)roundedCornerRadius
+{
+    // Create the path (with top corners rounded)
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+                                                   byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                                                         cornerRadii:CGSizeMake(roundedCornerRadius, roundedCornerRadius)];
+    
+    // Create the shape layer and set its path
+    CAShapeLayer *maskLayer = [CAShapeLayer layer];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    
+    // Set the newly created shape layer as the mask for the image view's layer
+    self.layer.mask = maskLayer;
+    self.layer.shouldRasterize = YES;
 }
 
 
