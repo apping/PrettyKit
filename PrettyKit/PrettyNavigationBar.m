@@ -105,8 +105,10 @@
 
 - (void)setRoundedCornerRadius:(CGFloat)roundedCornerRadius
 {
+    CGRect bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)+(self.shadowImage.size.height ? self.shadowImage.size.height : 10));
+    
     // Create the path (with top corners rounded)
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:bounds
                                                    byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
                                                          cornerRadii:CGSizeMake(roundedCornerRadius, roundedCornerRadius)];
     
