@@ -59,6 +59,10 @@
 }
 
 + (void) drawLineAtPosition:(LinePosition)position rect:(CGRect)rect color:(UIColor *)color {
+    [PrettyDrawing drawLineAtPosition:position lineWidth:1.5 rect:rect color:color];
+}
+
++ (void) drawLineAtPosition:(LinePosition)position lineWidth:(CGFloat)lineWidth rect:(CGRect)rect color:(UIColor *)color {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
     
@@ -76,7 +80,7 @@
     CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), y);
     
     CGContextSetStrokeColorWithColor(ctx, color.CGColor);
-    CGContextSetLineWidth(ctx, 1.5);
+    CGContextSetLineWidth(ctx, lineWidth);
     CGContextStrokePath(ctx);
     
     CGContextRestoreGState(ctx);

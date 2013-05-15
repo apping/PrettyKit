@@ -57,9 +57,11 @@ typedef enum {
  
  - `LinePositionTop`: the rect's min height.
  - `LinePositionBottom`: the rect's max height.
+ - lineWidth defaults to 1.5
 
  */
 + (void) drawLineAtPosition:(LinePosition)position rect:(CGRect)rect color:(UIColor *)color;
++ (void) drawLineAtPosition:(LinePosition)position lineWidth:(CGFloat)lineWidth rect:(CGRect)rect color:(UIColor *)color;
 
 /** 
  Draws a line at the given rect's height, with the given color into the given rect.
