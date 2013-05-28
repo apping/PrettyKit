@@ -94,33 +94,69 @@
     [PrettyDrawing drawLineAtPosition:LinePositionBottom rect:rect color:self.bottomLineColor];
 }
 
+-(void) drawLeftRoundedCornerAtPoint:(CGPoint)point withRadius:(CGFloat)radius withTransformation:(CGAffineTransform)transform {
+    
+    // create the path. has to be done this way to allow use of the transform
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathMoveToPoint(path, &transform, point.x, point.y);
+    CGPathAddLineToPoint(path, &transform, point.x, point.y + radius);
+    CGPathAddArc(path, &transform, point.x + radius, point.y + radius, radius, (180) * M_PI/180, (-90) * M_PI/180, 0);
+    CGPathAddLineToPoint(path, &transform, point.x, point.y);
+    
+    // fill the path to create the illusion that the corner is rounded
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextAddPath(context, path);
+    CGContextSetFillColorWithColor(context, [self.roundedCornerColor CGColor]);
+    CGContextFillPath(context);
+    
+    // appropriate memory management
+    CGPathRelease(path);
+}
+
 - (void) drawRect:(CGRect)rect {
     [super drawRect:rect];
     
     [self dropShadowWithOpacity:self.shadowOpacity];
     [PrettyDrawing drawGradient:rect fromColor:self.gradientStartColor toColor:self.gradientEndColor];
-    [self drawTopLine:rect];        
+    [self drawTopLine:rect];
     [self drawBottomLine:rect];
+    
+    if (self.roundedCornerRadius > 0 && ![self respondsToSelector:@selector(shadowImage)]) {
+        // draw the left rounded corner with a transform of 0 because nothing should be changed
+        [self drawLeftRoundedCornerAtPoint:CGPointMake(0, 0) withRadius:self.roundedCornerRadius withTransformation:CGAffineTransformMakeRotation(0)];
+        
+        // draw the right rounded corner with a 90degree transform. this means the x and y coords are flipped which means the point must also flip
+        [self drawLeftRoundedCornerAtPoint:CGPointMake(0, -self.frame.size.width) withRadius:self.roundedCornerRadius withTransformation:CGAffineTransformMakeRotation((90) * M_PI/180)];
+    }
 }
 
 - (void)setRoundedCornerRadius:(CGFloat)roundedCornerRadius
 {
-    CGRect bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)+(self.shadowImage.size.height ? self.shadowImage.size.height : 10));
-    
-    // Create the path (with top corners rounded)
-    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:bounds
-                                                   byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
-                                                         cornerRadii:CGSizeMake(roundedCornerRadius, roundedCornerRadius)];
-    
-    // Create the shape layer and set its path
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    maskLayer.frame = self.bounds;
-    maskLayer.path = maskPath.CGPath;
-    
-    // Set the newly created shape layer as the mask for the image view's layer
-    self.layer.mask = maskLayer;
-    self.layer.shouldRasterize = YES;
-}
+    if (_roundedCornerRadius != roundedCornerRadius) {
+        _roundedCornerRadius = roundedCornerRadius;
+        
+        // Make sure that we are using iOS6+
+        if (![self respondsToSelector:@selector(shadowImage)]) {
+            // Bail if iOS5
+            return;
+        }
+        
+        CGRect bounds = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds)+(self.shadowImage.size.height ? self.shadowImage.size.height : 10));
+        
+        // Create the path (with top corners rounded)
+        UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:bounds
+                                                       byRoundingCorners:UIRectCornerTopLeft | UIRectCornerTopRight
+                                                             cornerRadii:CGSizeMake(roundedCornerRadius, roundedCornerRadius)];
+        
+        // Create the shape layer and set its path
+        CAShapeLayer *maskLayer = [CAShapeLayer layer];
+        maskLayer.frame = self.bounds;
+        maskLayer.path = maskPath.CGPath;
+        
+        // Set the newly created shape layer as the mask
+        self.layer.mask = maskLayer;
+        self.layer.shouldRasterize = YES;
+    }
 
 
 @end
