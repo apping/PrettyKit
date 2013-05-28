@@ -157,6 +157,6 @@
         self.layer.mask = maskLayer;
         self.layer.shouldRasterize = YES;
     }
-
+}
 
 @end
