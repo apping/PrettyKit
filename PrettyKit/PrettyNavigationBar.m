@@ -86,12 +86,12 @@
 }
 
 - (void) drawTopLine:(CGRect)rect {
-    [PrettyDrawing drawLineAtPosition:LinePositionTop rect:rect color:self.topLineColor];
+    [PrettyDrawing drawLineAtPosition:LinePositionTop lineWidth:self.topLineWidth rect:rect color:self.topLineColor];
 }
 
 
 - (void) drawBottomLine:(CGRect)rect {
-    [PrettyDrawing drawLineAtPosition:LinePositionBottom rect:rect color:self.bottomLineColor];
+    [PrettyDrawing drawLineAtPosition:LinePositionBottom lineWidth:self.bottomLineWidth rect:rect color:self.bottomLineColor];
 }
 
 -(void) drawLeftRoundedCornerAtPoint:(CGPoint)point withRadius:(CGFloat)radius withTransformation:(CGAffineTransform)transform {
@@ -116,8 +116,11 @@
 - (void) drawRect:(CGRect)rect {
     [super drawRect:rect];
     
-    [self dropShadowWithOpacity:self.shadowOpacity];
+    if ([_prettyNavigationBarDropsShadow boolValue])
+        [self dropShadowWithOpacity:self.shadowOpacity];
+    
     [PrettyDrawing drawGradient:rect fromColor:self.gradientStartColor toColor:self.gradientEndColor];
+    
     [self drawTopLine:rect];
     [self drawBottomLine:rect];
     
@@ -156,6 +159,33 @@
         // Set the newly created shape layer as the mask
         self.layer.mask = maskLayer;
         self.layer.shouldRasterize = YES;
+    }
+}
+
+- (void)setPrettyNavigationBarDropsShadow:(NSNumber *)prettyNavigationBarDropsShadow
+{
+    if ([_prettyNavigationBarDropsShadow boolValue] != [prettyNavigationBarDropsShadow boolValue]) {
+        _prettyNavigationBarDropsShadow = prettyNavigationBarDropsShadow;
+        
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setBottomLineWidth:(CGFloat)bottomLineWidth
+{
+    if (_bottomLineWidth != bottomLineWidth) {
+        _bottomLineWidth = bottomLineWidth;
+        
+        [self setNeedsDisplay];
+    }
+}
+
+- (void)setTopLineWidth:(CGFloat)topLineWidth
+{
+    if (_topLineWidth != topLineWidth) {
+        _topLineWidth = topLineWidth;
+        
+        [self setNeedsDisplay];
     }
 }
 

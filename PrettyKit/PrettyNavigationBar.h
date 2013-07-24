@@ -73,6 +73,16 @@
  By default is a blue tone. */
 @property (nonatomic, strong) UIColor *bottomLineColor UI_APPEARANCE_SELECTOR;
 
+/** Specifies if the width/thickness of the top line
+ 
+ By default this is 1.5. */
+@property (nonatomic) CGFloat topLineWidth UI_APPEARANCE_SELECTOR;
+
+/** Specifies if the width/thickness of the top line
+ 
+ By default this is 1.5. */
+@property (nonatomic) CGFloat bottomLineWidth UI_APPEARANCE_SELECTOR;
+
 /** Specifies the background color for the rounded corners.
  
  By default is a black tone. */
@@ -82,5 +92,12 @@
  
  By default it is 0.0 which means there is no rounded corners. */
 @property (nonatomic, readwrite) CGFloat roundedCornerRadius UI_APPEARANCE_SELECTOR;
+
+/** Specifies if the navigationbar should drop a shadow
+ 
+ To use UIAppearance we have to use a NSNumber to represent a BOOL value
+ We can't use the name dropsShadow: as it will collide with other methods.
+ By default it is NO which means there is no shadow. */
+@property (nonatomic) NSNumber *prettyNavigationBarDropsShadow UI_APPEARANCE_SELECTOR;
 
 @end
