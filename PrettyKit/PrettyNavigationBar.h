@@ -98,6 +98,6 @@
  To use UIAppearance we have to use a NSNumber to represent a BOOL value
  We can't use the name dropsShadow: as it will collide with other methods.
  By default it is NO which means there is no shadow. */
-@property (nonatomic) NSNumber *prettyNavigationBarDropsShadow UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong) NSNumber *prettyNavigationBarDropsShadow UI_APPEARANCE_SELECTOR;
 
 @end
